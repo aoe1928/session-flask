@@ -10,7 +10,6 @@ import os
 # app.secret_key = 'abcdefghijklmn'
 # app.permanent_session_lifetime = timedelta(minutes=3) 
 
-
 @app.after_request
 def add_header(r):
     """
