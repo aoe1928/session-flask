@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <title>掲示版</title>
+    <style>
+        table {
+            table-layout: fixed;
+            width: 50%;
+        }
+    </style>
+</head>
+<body >
+    {% autoescape false %}
+    <h2>掲示版</h2>
+    <table>
+        <tr>
+            <td>投稿者</td>
+            <td>日付</td>
+            <td>投稿内容</td>
+        </tr>
+        {% for bbs in bbs_list %}
+        <tr>
+            <td>{{bbs[0]}}</td>
+            <td>{{bbs[2]}}</td>
+            <td>{{bbs[1]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% if flag %}
+    <form method="post" action="/bbs">
+        <p>内容<input type="text" name="text"></p>
+        <button type="submit" value="Login">投稿</button> 
+    </form>
+    {% endif %}
+    <a href="/">戻る</a>
+    {% endautoescape %}
+</body>
+</html>

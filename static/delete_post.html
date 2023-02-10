@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザー検索</title>
+</head>
+<body >
+    <h2>ユーザー検索</h2>
+    <a href="/">TOP</a><br>
+    <a href="/bbs">掲示版</a><br>
+    <table>
+        {% for user in user_list %}
+        <tr>
+            <p>{{user}}</p>
+        </tr>
+        {% endfor %}
+    </table>
+    <form method="get" action='/users'>
+        <input type="text" name="user">
+        <input type="submit" value="検索する">
+    </form>
+</body>
+</html>
