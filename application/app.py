@@ -109,7 +109,7 @@ def login2():
         password = bcrypt.generate_password_hash(request.form.get("password")).decode("utf-8")
         # password = request.form.get("password")
         # data = {"email": f"{email}", "password": f"{password}"}
-        statement = text(f"""insert into User(email, password) values ('{email}', '{password}')""")
+        statement = text(f"""insert into public.user(email, password) values ('{email}', '{password}')""")
         engine = create_engine(os.environ['DATABASE_URL'])
         try:
             engine.execute(statement=statement)
@@ -125,7 +125,7 @@ def login2():
 def users():
     search_user = request.args.get("user")
     engine = create_engine(os.environ['DATABASE_URL'])
-    statement = text(f"""select email from user where email like '%{search_user}%'""")
+    statement = text(f"""select email from public.user where email like '%{search_user}%'""")
     try:
         res = engine.execute(statement=statement)
     except IntegrityError as e:

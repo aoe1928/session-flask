@@ -28,7 +28,7 @@ class Bbs(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     email = db.Column(db.String(255))
     text = db.Column(db.String(255))
-    date = db.Column(db.Integer())
+    date = db.Column(db.String(255))
 
     def __init__(self, email, text, date):
         self.email = email
