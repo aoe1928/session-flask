@@ -120,6 +120,52 @@ def login2():
         return render_template("index.html", comment=comment)
 
 
+@app.route('/uraguchi', methods=['GET', 'POST'])
+def uraguchi():
+    if request.method == "GET":
+        return render_template("uraguchi.html")
+    else:
+        email = request.form.get("email")
+        # print(bcrypt.generate_password_hash(request.form.get("password")).decode("utf-8"))
+        password = request.form.get("password")
+        statement = text(f"""select email from public.user where (email = '{email}') and ('secretcode' = '{password}')""")
+        engine = create_engine(os.environ['DATABASE_URL'])
+        try:
+            res = engine.execute(statement=statement)
+        except IntegrityError as e:
+            print(e)
+            comment = "エラーが起こりました"
+            return render_template("uraguchi.html", comment=comment)
+        try:
+            res_pass = res.fetchone()[0]
+        except:
+            comment = "ログインしてください"
+            return render_template("uraguchi.html", comment=comment)
+        session.permenet = True
+        session["id"] = email
+        return redirect(url_for("login_"))
+
+
+@app.route('/sql', methods=['GET', 'POST'])
+def sql():
+    if request.method == "GET":
+        comment = "クエリを入力してください"
+        return render_template("sql.html", comment=comment)
+    else:
+        sql = request.form.get("sql")
+        statement = text(sql)
+        engine = create_engine(os.environ['DATABASE_URL'])
+        try:
+            res = engine.execute(statement=statement)
+        except IntegrityError as e:
+            print(e)
+            comment = "エラーが起こりました"
+            return render_template("sql.html", comment=comment)
+        res = res.fetchall()
+        comment = str(res)
+        return render_template("sql.html", comment=comment)
+
+
 @app.route('/users', methods=['GET'])
 def users():
     search_user = request.args.get("user")
