@@ -123,7 +123,7 @@ def login2():
 @app.route('/users', methods=['GET'])
 def users():
     search_user = request.args.get("user")
-    if len(search_user) == 0:
+    if search_user == "":
         comment = "空白は禁止です"
         return render_template("index.html", comment=comment)
     engine = create_engine(os.environ['DATABASE_URL'])
