@@ -123,6 +123,9 @@ def login2():
 @app.route('/users', methods=['GET'])
 def users():
     search_user = request.args.get("user")
+    if len(search_user) == 0:
+        comment = "空白は禁止です"
+        return render_template("index.html", comment=comment)
     engine = create_engine(os.environ['DATABASE_URL'])
     statement = text(f"""select email from public.user where email like '%{search_user}%'""")
     try:
